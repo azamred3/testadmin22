@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="منصة عودة للعقار — عقارات مختارة بعناية">
+    <meta name="theme-color" content="#1A1621">
+    <title>عودة للعقار — عقارات مختارة بعناية</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============================================
+         HEADER
+         ============================================ -->
+    <header class="header">
+        <div class="header-top">
+            <div class="logo-container">
+                <div class="logo-mark">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">عودة للعقار</span>
+                    <span class="logo-sub">عقارات مختارة بعناية</span>
+                </div>
+            </div>
+            <div class="user-actions">
+                <button class="icon-btn" aria-label="الإشعارات">
+                    <i class="fas fa-bell"></i>
+                    <span class="notif-dot"></span>
+                </button>
+               <a href="log.html">
+    <button class="icon-btn" aria-label="حسابي">
+        <i class="fas fa-user"></i>
+    </button>
+</a>
+            </div>
+        </div>
+
+        <div class="header-bottom">
+            <div class="search-container">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input
+                        type="text"
+                        class="search-input"
+                        id="search-input"
+                        placeholder="ابحث عن عقار، منطقة، مشروع..."
+                        autocomplete="off">
+                    <button class="search-clear-btn" id="search-clear" aria-label="مسح البحث">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================
+         HERO — العقار المميز
+         ============================================ -->
+    <section class="hero-section" id="hero-container"></section>
+
+    <!-- ============================================
+         SECTION INTRO
+         ============================================ -->
+    <section class="section-intro">
+        <div class="section-intro-inner">
+            <div>
+                <span class="eyebrow">استكشف</span>
+                <h2 class="section-heading">العقارات المتاحة</h2>
+            </div>
+            <span class="section-count" id="results-count">6 عقارات</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FILTERS BAR
+         ============================================ -->
+    <div class="filters-bar">
+        <div class="filters-container">
+            <button class="filter-btn active" data-filter="all">الكل</button>
+            <button class="filter-btn" data-filter="شقق">شقق</button>
+            <button class="filter-btn" data-filter="فلل">فلل</button>
+            <button class="filter-btn" data-filter="أراضي">أراضي</button>
+            <button class="filter-btn" data-filter="مشاريع">مشاريع</button>
+            <button class="filter-btn" id="filter-modal-btn">
+                <i class="fas fa-sliders-h"></i>
+                <span>فلترة</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================
+         MAIN — Bento Grid
+         ============================================ -->
+    <main class="main-content">
+        <div class="properties-container" id="properties-container">
+            <!-- يُملأ ديناميكياً -->
+        </div>
+    </main>
+
+    <!-- ============================================
+         PREVIEW OVERLAY
+         ============================================ -->
+    <div class="property-preview-overlay">
+        <div class="property-preview">
+            <div class="preview-header">
+                <button class="close-preview" aria-label="إغلاق">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <h2 class="preview-title">تفاصيل العقار</h2>
+                <button class="preview-action-btn" id="preview-favorite-btn" aria-label="المفضلة">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
+            <div class="preview-content"></div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         MAP OVERLAY
+         ============================================ -->
+    <div class="map-overlay">
+        <div class="map-container">
+            <div class="map-header">
+                <button class="close-map" aria-label="إغلاق الخريطة">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="map-title">موقع العقار</h2>
+            </div>
+            <div id="property-map"></div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         FILTER MODAL
+         ============================================ -->
+    <div class="filter-modal">
+        <div class="filter-content">
+            <div class="filter-header">
+                <h3>فلترة النتائج</h3>
+                <button class="close-filter" aria-label="إغلاق">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="filter-body">
+                <div class="filter-section">
+                    <h4>نوع العقار</h4>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" name="property-type" value="شقق" checked>
+                            <span class="checkmark"></span>
+                            شقق
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="property-type" value="فلل" checked>
+                            <span class="checkmark"></span>
+                            فلل
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="property-type" value="أراضي" checked>
+                            <span class="checkmark"></span>
+                            أراضي
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="property-type" value="مشاريع" checked>
+                            <span class="checkmark"></span>
+                            مشاريع
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>نوع العملية</h4>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" name="transaction-type" value="بيع" checked>
+                            <span class="checkmark"></span>
+                            للبيع
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="transaction-type" value="إيجار" checked>
+                            <span class="checkmark"></span>
+                            للإيجار
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>نطاق السعر (ريال)</h4>
+                    <div class="range-inputs">
+                        <input type="number" placeholder="من" class="price-input" id="min-price">
+                        <input type="number" placeholder="إلى" class="price-input" id="max-price">
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>المساحة (م²)</h4>
+                    <div class="range-inputs">
+                        <input type="number" placeholder="من" class="area-input" id="min-area">
+                        <input type="number" placeholder="إلى" class="area-input" id="max-area">
+                    </div>
+                </div>
+            </div>
+            <div class="filter-footer">
+                <button class="filter-reset-btn" id="reset-filters">إعادة تعيين</button>
+                <button class="filter-apply-btn" id="apply-filters">تطبيق الفلترة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         SHARE MODAL
+         ============================================ -->
+    <div class="share-modal">
+        <div class="share-content">
+            <div class="share-header">
+                <h3>مشاركة العقار</h3>
+                <button class="close-share" aria-label="إغلاق">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="share-options">
+                <button class="share-option whatsapp-share">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>واتساب</span>
+                </button>
+                <button class="share-option telegram-share">
+                    <i class="fab fa-telegram"></i>
+                    <span>تيليجرام</span>
+                </button>
+                <button class="share-option link-share">
+                    <i class="fas fa-link"></i>
+                    <span>نسخ الرابط</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مكتبة الخرائط -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- 🌟 سطور ربط Supabase الجديدة 🌟 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+
+    <!-- كود الموقع الأساسي -->
+    <script src="script.js"></script>
+</body>
+</html>

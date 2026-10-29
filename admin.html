@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1A1621">
+    <meta name="description" content="لوحة تحكم عودة للعقار">
+    <title>لوحة التحكم — عودة للعقار</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <!-- ============ HEADER ============ -->
+    <header class="admin-header">
+        <div class="header-top">
+            <div class="logo-container">
+                <div class="logo-mark">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="admin-title">عودة للعقار</span>
+                    <span class="admin-subtitle">لوحة التحكم</span>
+                </div>
+            </div>
+            <div class="user-actions">
+                <button class="icon-btn logout-btn" id="logout-btn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="header-bottom">
+            <nav class="admin-nav">
+                <a href="#properties" class="nav-item active" data-section="properties">
+                    <i class="fas fa-home"></i>
+                    <span>إدارة العقارات</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ============ MAIN ============ -->
+    <main class="admin-main">
+        <!-- قسم إدارة العقارات -->
+        <section id="properties" class="admin-section active">
+            <div class="section-header">
+                <div>
+                    <span class="eyebrow">لوحة التحكم</span>
+                    <h1 class="section-title">إدارة العقارات</h1>
+                </div>
+                <div class="section-actions">
+                    <button class="btn btn-primary" id="add-property-btn">
+                        <i class="fas fa-plus"></i>
+                        إضافة عقار جديد
+                    </button>
+                </div>
+            </div>
+
+            <div class="filters-bar">
+                <div class="search-container">
+                    <div class="search-bar">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" id="properties-search" placeholder="ابحث في العقارات...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="properties-grid" id="properties-grid"></div>
+        </section>
+    </main>
+
+    <!-- ============ MODAL: إضافة/تعديل عقار ============ -->
+    <div class="modal" id="property-modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3 id="property-modal-title">إضافة عقار جديد</h3>
+                <button class="close-modal" id="close-property-modal" aria-label="إغلاق">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="property-form">
+                    <input type="hidden" id="property-id">
+
+                    <div class="form-tabs">
+                        <button type="button" class="tab-btn active" data-tab="basic-info">المعلومات الأساسية</button>
+                    </div>
+
+                    <div class="tab-content active" id="basic-info-tab">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="property-title">اسم العقار *</label>
+                                <input type="text" id="property-title" placeholder="أدخل اسم العقار" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="property-code">رمز العقار *</label>
+                                <input type="text" id="property-code" placeholder="مثل: J107" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="property-type">نوع العقار *</label>
+                                <select id="property-type" required>
+                                    <option value="">اختر النوع</option>
+                                    <option value="شقق">شقق</option>
+                                    <option value="فلل">فلل</option>
+                                    <option value="أراضي">أراضي</option>
+                                    <option value="مشاريع">مشاريع</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="property-category">التصنيف *</label>
+                                <select id="property-category" required>
+                                    <option value="">اختر التصنيف</option>
+                                    <option value="للبيع">للبيع</option>
+                                    <option value="للإيجار">للإيجار</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="property-price">السعر *</label>
+                                <input type="text" id="property-price" placeholder="أدخل السعر" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="property-area">المساحة (م²) *</label>
+                                <input type="number" id="property-area" placeholder="أدخل المساحة" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="property-location">الموقع *</label>
+                            <input type="text" id="property-location" placeholder="أدخل العنوان" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="property-image-url">رابط الصورة (URL)</label>
+                            <input type="url" id="property-image-url" placeholder="https://example.com/image.jpg">
+                        </div>
+                        <div class="form-group">
+                            <label for="property-description">الوصف</label>
+                            <textarea id="property-description" placeholder="أدخل وصف العقار" rows="4"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancel-property">إلغاء</button>
+                <button class="btn btn-primary" id="save-property">
+                    <i class="fas fa-save"></i>
+                    حفظ العقار
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- رسائل التنبيه -->
+    <div class="alert-container" id="alert-container"></div>
+
+    <!-- 🌟 سطور ربط Supabase 🌟 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    
+    <!-- كود الأدمن -->
+    <script src="admin.js"></script>
+</body>
+</html>
